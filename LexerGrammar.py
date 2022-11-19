@@ -6,7 +6,7 @@ import os.path
 
 rules = [
         ('for\s+', 'FOR'),
-        ('while\s+', 'WHILE'),
+        ('while\W', 'WHILE'),
         ('do\s+', 'DO'),
         ('==', 'DOUBLE_EQUAL'),
         ('===', 'TRIPLE_EQUAL'),
@@ -21,14 +21,14 @@ rules = [
         ('\-', 'MINUS'),
         ('\*', 'MULTI'),
         ('\/', 'DIVIDE'),
-        ('\**', 'EXPO'),
+        ('\*\*', 'EXPO'),
         ('%', 'MOD'),
         ('&&', 'AND'),
-        ('||', 'OR'),
-        ('??', 'NULLISH'),
+        ('\|\|', 'OR'),
+        ('\?\?', 'NULLISH'),
         ('&', 'BITWISE_AND'),
-        ('|', 'BITWISE_OR'),
-        ('^', 'XOR'),
+        ('\|', 'BITWISE_OR'),
+        ('\^', 'XOR'),
         ('<<', 'LEFT_SHIFT'),
         ('>>', 'RIGHT_SHIFT'),
         ('>>>', 'UNSIGNED_LEFT_SHIFT'),
@@ -55,7 +55,7 @@ rules = [
         (':', 'COLON'),
         ('\d+\.\d+', 'TYPE_FLOAT'),
         ('\d+', 'TYPE_INT'),
-        ('[a-zA-Z_]\w*', 'OBJ')
+        ('[a-zA-Z_]\w*', 'OBJECT')
     ]
 
 class Token(object):

@@ -17,7 +17,7 @@ print('[better version tapi masih gws]\n')
 
 inputfile = input('Insert file name (.js): ')
 if isExist(inputfile):
-    lexered = LexerGrammar.Lexer(LexerGrammar.rules, skip_whitespace=True)
+    lex = LexerGrammar.Lexer(LexerGrammar.rules, skip_whitespace=True)
     cyk = CYK.Parser('cnf.txt')
     file = open(inputfile, "r", encoding="utf8")
     lineArr = []
@@ -36,14 +36,14 @@ if isExist(inputfile):
         lines = file.readlines()
     for i, line in enumerate(lines):
         lexered = ''
-        """ lex.input(line)
+        lex.input(line)
         try:
             for tok in lex.tokens():
                 lexered += f'{tok!r}'
-        except lexer.LexerError as err:
+        except LexerGrammar.LexerError as err:
             print(f'LexerError at position {err.pos}')
 
-        if "BBCOMMENT" in lexered:
+        """ if "BBCOMMENT" in lexered:
             lexered = lexered.replace("BBCOMMENT ","")
         if "BCOMMENT" in lexered:
             if not isSkipUntilNextBC:
@@ -75,17 +75,16 @@ if isExist(inputfile):
                 level-=1
         elif "IF" in lexered:
             level+=1
-            isIfLevel.append(level)
+            isIfLevel.append(level) """
 
         cyk(lexered,parse=True)
         isAccepted = cyk.print_tree(output=False)
         if not isAccepted:
             break
-        if isBlockComment:
+        """ if isBlockComment:
             isSkipUntilNextBC = True
             isBlockComment = False """
-        
-    # Results
+            
     print("\nResult:", end = " ")
     if isAccepted:
         print('\033[92m' + "Accepted")
