@@ -54,8 +54,16 @@ OP -> BIT_OP
 STRING -> DOUBLE_QUOTE (BEBAS) DOUBLE_QUOTE | SINGLE_QUOTE (BEBAS) SINGLE_QUOTE /* Placeholder */
 BOOL -> 'TRUE'
 BOOL -> 'FALSE'
-NUM -> '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '.' | NUM NUM | 'MINUS' NUM | '0x' NUM | '0o' NUM | '0b' NUM (BINARY, Perlu cara buat nerima 0 1 doang) | NUM 'n' (big int)
+SIGN -> 'PLUS'
+SIGN -> 'MINUS'
+INTEGER -> 'TYPE_INT'
+FLOAT -> 'TYPE_FLOAT'
+NUM -> INTEGER
+NUM -> SIGN INTEGER
+NUM -> FLOAT
+NUM -> SIGN FLOAT
 
+OBJ -> 'OBJ'
 FOR -> 'FOR'
 WHILE -> 'WHILE'
 DO -> 'DO'

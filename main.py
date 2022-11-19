@@ -2,7 +2,7 @@
 # The main program and all syntax checking problems, calling exteernal functions
 
 from os.path import isfile as isExist
-import Lexer
+import LexerGrammar
 import CYK
 
 isBlockComment = False
@@ -17,7 +17,7 @@ print('[better version tapi masih gws]\n')
 
 inputfile = input('Insert file name (.js): ')
 if isExist(inputfile):
-    """ lexered = lexer.Lexer(lexer.rules, skip_whitespace=True) """
+    lexered = LexerGrammar.Lexer(LexerGrammar.rules, skip_whitespace=True)
     cyk = CYK.Parser('cnf.txt')
     file = open(inputfile, "r", encoding="utf8")
     lineArr = []
