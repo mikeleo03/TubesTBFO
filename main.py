@@ -1,6 +1,9 @@
+# Main program 
+# The main program and all syntax checking problems, calling exteernal functions
+
 from os.path import isfile as isExist
-""" import lexer
-import cyk """
+import Lexer
+import CYK
 
 isBlockComment = False
 isSkipUntilNextBC = False
@@ -9,13 +12,13 @@ isAccepted = True
 isIfLevel = []
 level = 0
 
-print('JAVASCRIPT PARSER (beta version)')
-print('[lebih ke blm ngapa2in sih]\n')
+print('JAVASCRIPT PARSER (gamma version)')
+print('[better version tapi masih gws]\n')
 
 inputfile = input('Insert file name (.js): ')
 if isExist(inputfile):
-    """ lx = lexer.Lexer(lexer.rules, skip_whitespace=True)
-    CYK = cyk.Parser('cnf.txt') """
+    """ lexered = lexer.Lexer(lexer.rules, skip_whitespace=True) """
+    cyk = CYK.Parser('cnf.txt')
     file = open(inputfile, "r", encoding="utf8")
     lineArr = []
     
@@ -33,7 +36,54 @@ if isExist(inputfile):
         lines = file.readlines()
     for i, line in enumerate(lines):
         lexered = ''
-        # lx.input(line)
+        """ lex.input(line)
+        try:
+            for tok in lex.tokens():
+                lexered += f'{tok!r}'
+        except lexer.LexerError as err:
+            print(f'LexerError at position {err.pos}')
+
+        if "BBCOMMENT" in lexered:
+            lexered = lexered.replace("BBCOMMENT ","")
+        if "BCOMMENT" in lexered:
+            if not isSkipUntilNextBC:
+                isBlockComment = True
+                posBC = lexered.find("BCOMMENT")
+                if posBC == 0:
+                    lexered = ''
+                else:
+                    lexered = lexered[:posBC:]
+            else:
+                isSkipUntilNextBC = False
+                posBC = lexered.find("BCOMMENT")
+                lexered = lexered[posBC+9::]
+
+        if isSkipUntilNextBC:
+            continue
+        if "COMMENT" in lexered:
+            lexered = lexered.replace("COMMENT ","")
+        if "DEF" in lexered:
+            level+=1
+            isDef = True
+        
+        if ("ELIF" or "ELSE") in lexered:
+            if level not in isIfLevel:
+                isAccepted = False
+                break
+            elif "ELSE" in lexered:
+                isIfLevel.remove(level)
+                level-=1
+        elif "IF" in lexered:
+            level+=1
+            isIfLevel.append(level)
+
+        cyk(lexered,parse=True)
+        isAccepted = cyk.print_tree(output=False)
+        if not isAccepted:
+            break
+        if isBlockComment:
+            isSkipUntilNextBC = True
+            isBlockComment = False """
         
     # Results
     print("\nResult:", end = " ")
