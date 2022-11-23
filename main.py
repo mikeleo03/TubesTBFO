@@ -12,8 +12,8 @@ isAccepted = True
 isIfLevel = []
 level = 0
 
-print('JAVASCRIPT PARSER (gamma version)')
-print('[better version tapi masih gws]\n')
+print('JAVASCRIPT PARSER (hampi rilis version)')
+print('[udah keren yey dikit lagi]\n')
 
 inputfile = input('Insert file name (.js): ')
 if isExist(inputfile):
