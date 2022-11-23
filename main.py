@@ -18,7 +18,7 @@ print('[better version tapi masih gws]\n')
 inputfile = input('Insert file name (.js): ')
 if isExist(inputfile):
     lex = LexerGrammar.Lexer(LexerGrammar.rules, skip_whitespace=True)
-    cyk = CYK.Parser('cnf.txt')
+    cyk = CYK.Parser('cnf2.txt')
     file = open(inputfile, "r", encoding="utf8")
     lineArr = []
     
@@ -65,28 +65,30 @@ if isExist(inputfile):
         if "DEF" in lexered:
             level+=1
             isDef = True
+        """
         
-        if ("ELIF" or "ELSE") in lexered:
+        if "CURFEW_CLOSE" in lexered:
             if level not in isIfLevel:
                 isAccepted = False
                 break
-            elif "ELSE" in lexered:
+            elif "CURFEW_CLOSE" in lexered:
                 isIfLevel.remove(level)
                 level-=1
-        elif "IF" in lexered:
+        if "CURFEW_OPEN" in lexered:
             level+=1
-            isIfLevel.append(level) """
+            isIfLevel.append(level)
 
         cyk(lexered,parse=True)
         isAccepted = cyk.print_tree(output=False)
+        # print(isIfLevel)
         if not isAccepted:
             break
-        """ if isBlockComment:
+        if isBlockComment:
             isSkipUntilNextBC = True
-            isBlockComment = False """
+            isBlockComment = False
             
     print("\nResult:", end = " ")
-    if isAccepted:
+    if isAccepted and isIfLevel == []:
         print('\033[92m' + "Accepted")
     else:
         print('\033[93m' + f"\nSyntax Error at line {i+1}:")

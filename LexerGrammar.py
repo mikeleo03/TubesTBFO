@@ -53,6 +53,7 @@ rules = [
         ('case\s+', 'CASE'),
         ('default', 'DEFAULT'),
         (':', 'COLON'),
+        ('\.','DOT'),
         ('\d+\.\d+', 'TYPE_FLOAT'),
         ('\d+', 'TYPE_INT'),
         ('[a-zA-Z_]\w*', 'OBJECT')
