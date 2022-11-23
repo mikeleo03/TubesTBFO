@@ -93,5 +93,5 @@ def convert_grammar(grammar):
     return result
 
 # Main program
-coba = read_grammar('CFG1.txt')
+coba = read_grammar('CFG.txt')
 convert_grammar(coba)
