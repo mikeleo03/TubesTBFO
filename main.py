@@ -23,8 +23,8 @@ levelfunc = []
 levelloop = []
 level = 0
 
-print('JAVASCRIPT PARSER (hampi rilis version)')
-print('[udah keren yey dikit lagi]\n')
+print('JAVASCRIPT PARSER')
+print('[semakin yakin :)]\n')
 
 inputfile = input('Insert file name (.js): ')
 if isExist(inputfile):
@@ -56,21 +56,20 @@ if isExist(inputfile):
 
         if "SINGLE_LINE_COMMENT" in lexered:
             lexered = lexered.replace(lexered,"")
-            isBlockComment = True
-        """
-        if "BCOMMENT" in lexered:
-            if not isSkipUntilNextBC:
+
+        if isBlockComment:
+            if "MULTI_LINE_COMMENT_CLOSE" in lexered:
+                lexered = lexered.replace(lexered,"")
+                isBlockComment = False
+                isAccepted = True
+            else :
+                lexered = lexered.replace(lexered,"")
                 isBlockComment = True
-                posBC = lexered.find("BCOMMENT")
-                if posBC == 0:
-                    lexered = ''
-                else:
-                    lexered = lexered[:posBC:]
-            else:
-                isSkipUntilNextBC = False
-                posBC = lexered.find("BCOMMENT")
-                lexered = lexered[posBC+9::]
-        """
+                isAccepted = True
+        
+        if "MULTI_LINE_COMMENT_OPEN" in lexered:
+            lexered = lexered.replace(lexered,"")
+            isBlockComment = True
         
         if "WHILE" in lexered:
             isLoop = True
@@ -156,14 +155,11 @@ if isExist(inputfile):
         isAccepted = cyk.print_tree(output=False)
         if not isAccepted:
             break
-        if isBlockComment:
-            isSkipUntilNextBC = True
-            isBlockComment = False
     
         # print(isFunc,isLoop,returngagalfunc,returngagalloop)
-        print("terbaca",curfew)
+        """ print("terbaca",curfew)
         print("lexered",levelif,levelfunc,levelloop)
-        print("\n")
+        print("\n") """
     print("\nResult:", end = " ")
     if isAccepted and curfew == []:
         print('\033[92m' + "Accepted")

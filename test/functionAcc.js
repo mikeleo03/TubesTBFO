@@ -11,5 +11,5 @@ function toCelsius (fahrenheit) {
     return fahrenheit;
 }
 /* document.getElementById("demo").innerHTML = toCelsius; 
-Product(a,b,c,e); */
-toCelsius(20);
+Product(a,b,c,e);
+toCelsius(20); */
