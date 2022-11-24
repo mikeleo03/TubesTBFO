@@ -27,8 +27,19 @@ levelfunc = []
 levelloop = []
 level = 0
 
-print('JAVASCRIPT PARSER')
-print('[semakin yakin :)]\n')
+print('''
+    $$$$$\          === TUGAS BESAR TBFO IF2124 ===           $$\          $$\     
+   \__$$ |                                                    \__|         $$ |    
+      $$ |$$$$$$\$$\    $$\$$$$$$\  $$$$$$$\ $$$$$$$\ $$$$$$\ $$\ $$$$$$\$$$$$$\   
+      $$ |\____$$\$$\  $$  \____$$\$$  _____$$  _____$$  __$$\$$ $$  __$$\_$$  _|  
+$$\   $$ |$$$$$$$ \$$\$$  /$$$$$$$ \$$$$$$\ $$ /     $$ |  \__$$ $$ /  $$ |$$ |    
+$$ |  $$ $$  __$$ |\$$$  /$$  __$$ |\____$$\$$ |     $$ |     $$ $$ |  $$ |$$ |$$\ 
+\$$$$$$  \$$$$$$$ | \$  / \$$$$$$$ $$$$$$$  \$$$$$$$\$$ |     $$ $$$$$$$  |\$$$$  |
+ \______/ \_______|  \_/   \_______\_______/ \_______\__|     \__$$  ____/  \____/ 
+                                                                 $$ |              
+        P   A   R   S   E   R               -- Made by XXXX      $$ |              
+                                                                 \__|              
+        ''')
 
 inputfile = input('Insert file name (.js): ')
 if isExist(inputfile):
@@ -37,15 +48,19 @@ if isExist(inputfile):
     file = open(inputfile, "r", encoding="utf8")
     lineArr = []
     
-    # Mencetak hasil bacaan file ke layar
-    print("==================================================\n")
+    # Mencetak hasil bacaan file ke 
+    print("\n")
+    print("====================================  PARSING  ====================================\n")
     for line in file:
         if line != "\n" or line != "":
             lineArr.append([line, len(line) - len(line.lstrip())])
             print(line, end = "")
     file.close()
-    print("\n==================================================")
-    
+    print("\n")
+    print("====================================  VERDICT  ====================================")
+    print("")
+    print(f"Compiling {inputfile}....")
+    print("Get a result....")
     # Pengecekan error, parsing files
     with open(inputfile, 'r') as file:
         lines = file.readlines()
