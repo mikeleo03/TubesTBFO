@@ -7,7 +7,7 @@ import CYK
 
 isAccepted = True
 isBlockComment = False
-isSkipUntilNextBC = False
+isFunc = False
 isLoop = False
 isCase = False
 breakgagal = False
@@ -47,8 +47,10 @@ if isExist(inputfile):
         except LexerGrammar.LexerError as err:
             print(f'LexerError at position {err.pos}')
 
-        """ if "BBCOMMENT" in lexered:
-            lexered = lexered.replace("BBCOMMENT ","")
+        if "SINGLE_LINE_COMMENT" in lexered:
+            lexered = lexered.replace(lexered,"")
+            isBlockComment = True
+        """
         if "BCOMMENT" in lexered:
             if not isSkipUntilNextBC:
                 isBlockComment = True
@@ -61,17 +63,19 @@ if isExist(inputfile):
                 isSkipUntilNextBC = False
                 posBC = lexered.find("BCOMMENT")
                 lexered = lexered[posBC+9::]
-
-        if isSkipUntilNextBC:
-            continue
-        if "COMMENT" in lexered:
-            lexered = lexered.replace("COMMENT ","")
         """
+
+        """ if isBlockComment:
+            continue """
+        
         if ("FOR" or "WHILE") in lexered:
             isLoop = True
             
         if "CASE" in lexered:
             isCase = True
+            
+        if "FUNCTION" in lexered:
+            isFunc = True
             
         if ("BREAK" or "CONTINUE") in lexered:
             if (not isLoop and not isCase):
@@ -92,8 +96,8 @@ if isExist(inputfile):
                 breakgagal = False
                 isCase = False
         
-        if (not isLoop and not isCase) :
-            if "RETURN" in lexered:
+        if "RETURN" in lexered:
+            if (not isFunc):
                 isAccepted = False
                 returngagal = True
                 break
@@ -108,12 +112,9 @@ if isExist(inputfile):
         if "CURFEW_OPEN" in lexered:
             level+=1
             isIfLevel.append(level)
-            
-        # print(isIfLevel, isCase)
 
         cyk(lexered,parse=True)
         isAccepted = cyk.print_tree(output=False)
-        # print(isIfLevel)
         if not isAccepted:
             break
         if isBlockComment:
