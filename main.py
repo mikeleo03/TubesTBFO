@@ -71,9 +71,6 @@ if isExist(inputfile):
                 posBC = lexered.find("BCOMMENT")
                 lexered = lexered[posBC+9::]
         """
-
-        """ if isBlockComment:
-            continue """
         
         if "WHILE" in lexered:
             isLoop = True
@@ -164,9 +161,9 @@ if isExist(inputfile):
             isBlockComment = False
     
         # print(isFunc,isLoop,returngagalfunc,returngagalloop)
-        """ print("terbaca",curfew)
+        print("terbaca",curfew)
         print("lexered",levelif,levelfunc,levelloop)
-        print("\n") """
+        print("\n")
     print("\nResult:", end = " ")
     if isAccepted and curfew == []:
         print('\033[92m' + "Accepted")

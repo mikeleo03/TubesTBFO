@@ -10,6 +10,6 @@ function Product(a,b,c,d) {
 function toCelsius (fahrenheit) {
     return fahrenheit;
 }
-document.getElementById("demo").innerHTML = toCelsius; 
-Product(a,b,c,e);
+/* document.getElementById("demo").innerHTML = toCelsius; 
+Product(a,b,c,e); */
 toCelsius(20);

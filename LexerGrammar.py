@@ -8,6 +8,8 @@ rules = [
         ('for\W', 'FOR'),
         ('while\W', 'WHILE'),
         ('\/\/', 'SINGLE_LINE_COMMENT'),
+        ('\/\*', 'MULTI_LINE_COMMENT_OPEN'),
+        ('\*\/', 'MULTI_LINE_COMMENT_CLOSE'),
         ('==', 'DOUBLE_EQUAL'),
         ('===', 'TRIPLE_EQUAL'),
         ('=', 'EQUAL_SIGN'),
