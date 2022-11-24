@@ -6,7 +6,7 @@ import os.path
 
 rules = [
         ('for\s+', 'FOR'),
-        ('while\s+', 'WHILE'),
+        ('while\W', 'WHILE'),
         ('\/\/', 'SINGLE_LINE_COMMENT'),
         ('==', 'DOUBLE_EQUAL'),
         ('===', 'TRIPLE_EQUAL'),
@@ -65,6 +65,11 @@ rules = [
         ('of\s+', 'OF'),
         ('as\s+', 'AS'),
         ('is\s+', 'IS'),
+        ('throw\s+', 'THROW'),
+        ('delete\s+', 'DELETE'),
+        ('try\s+', 'TRY'),
+        ('catch\s+', 'CATCH'),
+        ('finally\s+', 'FINALLY'),
         ('[a-zA-Z_]\w*', 'NAME')
     ]
 

@@ -1,11 +1,10 @@
 let str = '';
 
-for (let i = 0; i < 9; i++) 
-{
+for (let i = 0; i < 9; i++) {
   str = str + i;
   while (str != 1){
     i++;
-  }
+  } 
   function a() {
     test++;
     if (test < 10) {
@@ -14,6 +13,8 @@ for (let i = 0; i < 9; i++)
         test++;
     }
   }
+} 
+while(i<10) 
+{
+    i++;
 }
-
-console.log(str);
