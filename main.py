@@ -9,11 +9,17 @@ isAccepted = True
 isBlockComment = False
 isFunc = False
 isLoop = False
+isIf = False
 isCase = False
 breakgagal = False
 continuegagal = False
-returngagal = False
-isIfLevel = []
+returngagalloop = False
+returngagalfunc = False
+curfew = []
+levelif = []
+levelcase = []
+levelfunc = []
+levelloop = []
 level = 0
 
 print('JAVASCRIPT PARSER (hampi rilis version)')
@@ -68,51 +74,86 @@ if isExist(inputfile):
         """ if isBlockComment:
             continue """
         
-        if ("FOR" or "WHILE") in lexered:
+        if "WHILE" in lexered:
             isLoop = True
+            levelloop.append(level+1)
+            
+        if "FOR" in lexered:
+            isLoop = True
+            levelloop.append(level+1)
+            
+        if "IF" in lexered:
+            isIf = True
+            levelif.append(level+1)
             
         if "CASE" in lexered:
             isCase = True
+            levelcase.append(level+1)
             
         if "FUNCTION" in lexered:
             isFunc = True
+            levelfunc.append(level+1)
             
-        if ("BREAK" or "CONTINUE") in lexered:
-            if (not isLoop and not isCase):
+        if "BREAK" in lexered:
+            if (len(levelloop) == 0 and len(levelcase) == 0):
                 isAccepted = False
                 breakgagal = True
                 break
-            elif (not isCase):
+            elif (len(levelcase) == 0):
                 isAccepted = False
                 breakgagal = True
-                break
-            elif (isCase and isIfLevel == []) :
-                isAccepted = False
-                breakgagal = False
-                isCase = False
                 break
             else :
                 isAccepted = True
                 breakgagal = False
                 isCase = False
+                
+        if "CONTINUE" in lexered:
+            if (len(levelloop) == 0):
+                isAccepted = False
+                continuegagal = True
+                break
+            else :
+                isAccepted = True
+                continuegagal = False
         
         if "RETURN" in lexered:
-            if (not isFunc):
+            if (len(levelfunc) == 0 and len(levelloop) == 0):
                 isAccepted = False
-                returngagal = True
+                returngagalloop = True
+                returngagalfunc = True
                 break
+            elif (len(levelfunc) == 0 and len(levelloop) != 0):
+                isAccepted = True
+                returngagalfunc = True
+                isLoop = False
+            elif (len(levelloop) == 0 and len(levelfunc) != 0):
+                isAccepted = True
+                returngagalloop = True
+                isFunc = False
+            else :
+                isAccepted = True
+                returngagalfunc = False
+                returngagalloop = False
         
         if "CURFEW_CLOSE" in lexered:
-            if level not in isIfLevel:
+            if level not in curfew:
                 isAccepted = False
                 break
             elif "CURFEW_CLOSE" in lexered:
-                isIfLevel.remove(level)
+                curfew.remove(level)
+                if level in levelif:
+                    levelif.remove(level)
+                if level in levelfunc:
+                    levelfunc.remove(level)
+                if level in levelloop:
+                    levelloop.remove(level)
                 level-=1
         if "CURFEW_OPEN" in lexered:
             level+=1
-            isIfLevel.append(level)
+            curfew.append(level)
 
+        # print(lexered)
         cyk(lexered,parse=True)
         isAccepted = cyk.print_tree(output=False)
         if not isAccepted:
@@ -120,9 +161,13 @@ if isExist(inputfile):
         if isBlockComment:
             isSkipUntilNextBC = True
             isBlockComment = False
-            
+    
+        """ print(isFunc,isLoop,returngagalfunc,returngagalloop)
+        print("terbaca",curfew)
+        print(levelif,levelfunc,levelloop)
+        print("\n") """
     print("\nResult:", end = " ")
-    if isAccepted and isIfLevel == []:
+    if isAccepted and curfew == []:
         print('\033[92m' + "Accepted")
     else:
         print('\033[93m' + f"\nSyntax Error at line {i+1}:")
@@ -131,8 +176,12 @@ if isExist(inputfile):
             print('\033[93m' + f"Tidak dapat menambahkan break di luar loop\n")
         if continuegagal:
             print('\033[93m' + f"Tidak dapat menambahkan continue di luar loop\n")
-        if returngagal:
+        if returngagalloop and returngagalfunc:
+            print('\033[93m' + f"Tidak dapat menambahkan return di luar loop dan function\n")
+        elif returngagalloop:
             print('\033[93m' + f"Tidak dapat menambahkan return di luar loop\n")
+        elif returngagalfunc:
+            print('\033[93m' + f"Tidak dapat menambahkan return di luar function\n")
         print(f"Readed: {lexered}")
     print('\033[0m')
     

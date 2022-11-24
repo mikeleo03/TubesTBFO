@@ -1,3 +1,4 @@
+let x = 7;
 function Product(a,b,c,d) {
     let x = a+b;
     x -= c;
