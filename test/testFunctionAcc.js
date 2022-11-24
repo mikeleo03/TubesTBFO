@@ -1,4 +1,4 @@
-function Product(a,b,c,d){
+function Product(a,b,c,d) {
     let x = a+b;
     x -= c;
     if (x == 1) {
@@ -6,3 +6,8 @@ function Product(a,b,c,d){
     }
     return x;
 }
+
+function toCelsius (fahrenheit) {
+    return fahrenheit;
+}
+document.getElementById("demo").innerHTML = toCelsius;

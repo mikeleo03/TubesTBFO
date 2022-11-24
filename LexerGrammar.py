@@ -5,8 +5,8 @@ import re
 import os.path
 
 rules = [
-        ('for\W', 'FOR'),
-        ('while\W', 'WHILE'),
+        ('for\s+', 'FOR'),
+        ('while\s+', 'WHILE'),
         ('\/\/', 'SINGLE_LINE_COMMENT'),
         ('==', 'DOUBLE_EQUAL'),
         ('===', 'TRIPLE_EQUAL'),
@@ -49,7 +49,7 @@ rules = [
         ("'", 'SINGLE_QUOTE'),
         ('true', 'TRUE'),
         ('false', 'FALSE'),
-        ('if\W', 'IF'),
+        ('if\s+', 'IF'),
         ('else', 'ELSE'),
         ('switch', 'SWITCH'),
         ('case\s+', 'CASE'),
