@@ -7,7 +7,6 @@ import os.path
 rules = [
         ('for\s+', 'FOR'),
         ('while\W', 'WHILE'),
-        ('do\s+', 'DO'),
         ('\/\/', 'SINGLE_LINE_COMMENT'),
         ('==', 'DOUBLE_EQUAL'),
         ('===', 'TRIPLE_EQUAL'),
@@ -62,7 +61,11 @@ rules = [
         ('let\s+', 'LET'),
         ('var\s+', 'VAR'),
         ('const\s+', 'CONST'),
-        ('[a-zA-Z_]\w*', 'OBJECT')
+        ('in\s+', 'IN'),
+        ('of\s+', 'OF'),
+        ('as\s+', 'AS'),
+        ('is\s+', 'IS'),
+        ('[a-zA-Z_]\w*', 'NAME')
     ]
 
 class Token(object):
