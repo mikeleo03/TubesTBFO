@@ -59,8 +59,8 @@ rules = [
         ('default\W', 'DEFAULT'),
         (':', 'COLON'),
         ('\.','DOT'),
-        ('\d+\.\d+', 'TYPE_FLOAT'),
-        ('\d+', 'TYPE_INT'),
+        ('\d+\.\d+\s+', 'TYPE_FLOAT'),
+        ('\d\s+', 'TYPE_INT'),
         ('let\s+', 'LET'),
         ('var\s+', 'VAR'),
         ('const\s+', 'CONST'),
@@ -73,7 +73,8 @@ rules = [
         ('try', 'TRY'),
         ('catch', 'CATCH'),
         ('finally', 'FINALLY'),
-        ('[a-zA-Z_]\w*', 'NAME')
+        ('[a-zA-Z_\$]+[\da-zA-Z_0-9\$]*', 'NAME'),
+        ('[\d]+[a-zA-Z_\$]+[\da-zA-Z_0-9\$]*','WRONGNAME')
     ]
 
 class Token(object):

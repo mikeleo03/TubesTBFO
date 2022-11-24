@@ -4,6 +4,7 @@
 from os.path import isfile as isExist
 import LexerGrammar
 import CYK
+import FA
 
 isAccepted = True
 isBlockComment = False
@@ -87,6 +88,7 @@ if isExist(inputfile):
             levelif.append(level+1)
             
         if "ELSE" in lexered:
+            levelif.append(level+1)
             if (not isIf):
                 ifgagal = True
                 break
@@ -143,6 +145,10 @@ if isExist(inputfile):
                 isAccepted = True
                 returngagalfunc = False
                 returngagalloop = False
+                
+        if "WRONGNAME" in lexered:
+            isAccepted = False
+            break
         
         if "CURFEW_CLOSE" in lexered:
             if level not in curfew:
@@ -161,24 +167,22 @@ if isExist(inputfile):
             level+=1
             curfew.append(level)
 
-        # print(lexered)
+        print(lexered)
         cyk(lexered,parse=True)
         isAccepted = cyk.print_tree(output=False)
         if not isAccepted:
             break
     
         # print(isFunc,isLoop,returngagalfunc,returngagalloop)
-        # print("terbaca",curfew)
-        """
-        print("lexered",levelif,levelfunc,levelloop)
-        print("\n") """
+        """ print("terbaca",curfew)
+        print("lexered",levelif,levelfunc,levelloop) """
     print("\nResult:", end = " ")
     if isAccepted and curfew == []:
         print('\033[92m' + "Accepted")
     else:
         print('\033[93m' + f"\nSyntax Error at line {i+1}:")
         print('\033[93m' + f"   >> {line.strip()}\n")
-        if breakgagal:
+        """ if breakgagal:
             print('\033[93m' + f"Tidak dapat menambahkan break di luar loop\n")
         if continuegagal:
             print('\033[93m' + f"Tidak dapat menambahkan continue di luar loop\n")
@@ -189,7 +193,7 @@ if isExist(inputfile):
         elif returngagalfunc:
             print('\033[93m' + f"Tidak dapat menambahkan return di luar function\n")
         if ifgagal:
-            print('\033[93m' + f"Tidak dapat menambahkan else sebelum ada if\n")
+            print('\033[93m' + f"Tidak dapat menambahkan else sebelum ada if\n") """
         print(f"Readed: {lexered}")
     print('\033[0m')
     
