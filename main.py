@@ -10,9 +10,12 @@ isBlockComment = False
 isFunc = False
 isLoop = False
 isIf = False
+isTry = False
+isSwitch = False
 isCase = False
 ifgagal = False
 breakgagal = False
+switchgagal = False
 continuegagal = False
 returngagalloop = False
 returngagalfunc = False
@@ -88,6 +91,14 @@ if isExist(inputfile):
                 ifgagal = True
                 break
             
+        if "TRY" in lexered:
+            isTry = True
+            
+        if "CATCH" in lexered:
+            if (not isTry):
+                trygagal = True
+                break
+            
         if "CASE" in lexered:
             isCase = True
             levelcase.append(level+1)
@@ -157,7 +168,8 @@ if isExist(inputfile):
             break
     
         # print(isFunc,isLoop,returngagalfunc,returngagalloop)
-        """ print("terbaca",curfew)
+        # print("terbaca",curfew)
+        """
         print("lexered",levelif,levelfunc,levelloop)
         print("\n") """
     print("\nResult:", end = " ")

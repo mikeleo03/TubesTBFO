@@ -1,4 +1,4 @@
-switch (new Date().getDay()) {
+switch (new Date().getDay())
     case 0:
       // baca buku
       break;
@@ -12,7 +12,7 @@ switch (new Date().getDay()) {
       day = "Wednesday";
       break;
     case 4:
-      day = "Thursday"
+      day = "Thursday";
       break;
     case 5:
       day = "Friday";
