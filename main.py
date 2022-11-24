@@ -167,7 +167,7 @@ if isExist(inputfile):
             level+=1
             curfew.append(level)
 
-        print(lexered)
+        # print(lexered)
         cyk(lexered,parse=True)
         isAccepted = cyk.print_tree(output=False)
         if not isAccepted:

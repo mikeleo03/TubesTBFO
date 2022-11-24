@@ -1,14 +1,11 @@
-function sudahlelahmonangis(x) {
-    // iseng nambahin single line comment
-    if (x > 0) {
-        if (x > 3) {
-            return "Haha";
-        }
+else {
+    if (true) {
+      print(3);
     } else {
-        return 0;
+      print(2);
     }
-
-    else {
-        return "Lelah";
-    }
+  } else if (x == 32) {
+    print(4);
+  } else {
+    print("Momen");
 }
