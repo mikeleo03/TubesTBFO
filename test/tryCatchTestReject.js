@@ -3,9 +3,10 @@ try {
     if (i > 0) {
         print("test");
     }
-  } catch (e) {
+  } catch () {
     document.getElementById("demo").innerHTML = err.message;
-  } finally {
+  } 
+  finally {
     let i = 0;
     while (i < 10) {
         console.log("Hello");
