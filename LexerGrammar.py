@@ -11,7 +11,7 @@ rules = [
         ('\/\/', 'SINGLE_LINE_COMMENT'),
         ('==', 'DOUBLE_EQUAL'),
         ('===', 'TRIPLE_EQUAL'),
-        ('=', 'ASSIGN_OP'),
+        ('=', 'EQUAL_SIGN'),
         ('!=', 'NOT_EQUAL'),
         ('!==', 'NOT_DOUBLE_EQUAL'),
         ('>', 'GREATER'),
@@ -36,6 +36,7 @@ rules = [
         ('>>>', 'UNSIGNED_LEFT_SHIFT'),
         (';', 'SEMICOLON'),
         ('!', 'NOT'),
+        (',', 'COMMA'),
         ('null', 'NULL'),
         ('break', 'BREAK'),
         ('continue', 'CONTINUE'),
@@ -58,6 +59,9 @@ rules = [
         ('\.','DOT'),
         ('\d+\.\d+', 'TYPE_FLOAT'),
         ('\d+', 'TYPE_INT'),
+        ('let\s+', 'LET'),
+        ('var\s+', 'VAR'),
+        ('const\s+', 'CONST'),
         ('[a-zA-Z_]\w*', 'OBJECT')
     ]
 

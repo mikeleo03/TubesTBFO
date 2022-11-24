@@ -22,7 +22,7 @@ print('[udah keren yey dikit lagi]\n')
 inputfile = input('Insert file name (.js): ')
 if isExist(inputfile):
     lex = LexerGrammar.Lexer(LexerGrammar.rules, skip_whitespace=True)
-    cyk = CYK.Parser('cnf2.txt')
+    cyk = CYK.Parser('cnf.txt')
     file = open(inputfile, "r", encoding="utf8")
     lineArr = []
     
