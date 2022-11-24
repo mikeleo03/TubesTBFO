@@ -5,7 +5,7 @@ import re
 import os.path
 
 rules = [
-        ('for\s+', 'FOR'),
+        ('for\W', 'FOR'),
         ('while\W', 'WHILE'),
         ('\/\/', 'SINGLE_LINE_COMMENT'),
         ('==', 'DOUBLE_EQUAL'),

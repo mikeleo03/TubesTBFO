@@ -8,7 +8,7 @@ import CYK
 isAccepted = True
 isBlockComment = False
 isSkipUntilNextBC = False
-isFuction = False
+isLoop = False
 isCase = False
 breakgagal = False
 continuegagal = False
@@ -67,14 +67,14 @@ if isExist(inputfile):
         if "COMMENT" in lexered:
             lexered = lexered.replace("COMMENT ","")
         """
-        if "FUNCTION" in lexered:
-            isFuction = True
+        if ("FOR" or "WHILE") in lexered:
+            isLoop = True
             
         if "CASE" in lexered:
             isCase = True
             
-        if "BREAK" in lexered:
-            if (not isFuction and not isCase):
+        if ("BREAK" or "CONTINUE") in lexered:
+            if (not isLoop and not isCase):
                 isAccepted = False
                 breakgagal = True
                 break
@@ -92,11 +92,7 @@ if isExist(inputfile):
                 breakgagal = False
                 isCase = False
         
-        if (not isFuction and not isCase) :
-            if "CONTINUE" in lexered:
-                isAccepted = False
-                continuegagal = True
-                break
+        if (not isLoop and not isCase) :
             if "RETURN" in lexered:
                 isAccepted = False
                 returngagal = True
@@ -131,11 +127,11 @@ if isExist(inputfile):
         print('\033[93m' + f"\nSyntax Error at line {i+1}:")
         print('\033[93m' + f"   >> {line.strip()}\n")
         if breakgagal:
-            print('\033[93m' + f"Tidak dapat menambahkan break di luar function\n")
+            print('\033[93m' + f"Tidak dapat menambahkan break di luar loop\n")
         if continuegagal:
-            print('\033[93m' + f"Tidak dapat menambahkan continue di luar function\n")
+            print('\033[93m' + f"Tidak dapat menambahkan continue di luar loop\n")
         if returngagal:
-            print('\033[93m' + f"Tidak dapat menambahkan return di luar function\n")
+            print('\033[93m' + f"Tidak dapat menambahkan return di luar loop\n")
         print(f"Readed: {lexered}")
     print('\033[0m')
     
