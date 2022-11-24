@@ -99,14 +99,9 @@ if isExist(inputfile):
                 isAccepted = False
                 breakgagal = True
                 break
-            elif (len(levelcase) == 0):
-                isAccepted = False
-                breakgagal = True
-                break
-            else :
+            elif (len(levelloop) != 0):
                 isAccepted = True
                 breakgagal = False
-                isCase = False
                 
         if "CONTINUE" in lexered:
             if (len(levelloop) == 0):
@@ -162,9 +157,9 @@ if isExist(inputfile):
             isSkipUntilNextBC = True
             isBlockComment = False
     
-        """ print(isFunc,isLoop,returngagalfunc,returngagalloop)
-        print("terbaca",curfew)
-        print(levelif,levelfunc,levelloop)
+        # print(isFunc,isLoop,returngagalfunc,returngagalloop)
+        """ print("terbaca",curfew)
+        print("lexered",levelif,levelfunc,levelloop)
         print("\n") """
     print("\nResult:", end = " ")
     if isAccepted and curfew == []:

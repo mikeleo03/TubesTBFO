@@ -14,7 +14,7 @@ for (let i = 0; i < 9; i++) {
     }
   }
 } 
-while(i<10) 
+while (i<10) 
 {
     i++;
 }
