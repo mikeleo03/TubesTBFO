@@ -5,10 +5,14 @@ from os.path import isfile as isExist
 import LexerGrammar
 import CYK
 
+isAccepted = True
 isBlockComment = False
 isSkipUntilNextBC = False
-isDef = False
-isAccepted = True
+isFuction = False
+isCase = False
+breakgagal = False
+continuegagal = False
+returngagal = False
 isIfLevel = []
 level = 0
 
@@ -62,10 +66,41 @@ if isExist(inputfile):
             continue
         if "COMMENT" in lexered:
             lexered = lexered.replace("COMMENT ","")
-        if "DEF" in lexered:
-            level+=1
-            isDef = True
         """
+        if "FUNCTION" in lexered:
+            isFuction = True
+            
+        if "CASE" in lexered:
+            isCase = True
+            
+        if "BREAK" in lexered:
+            if (not isFuction and not isCase):
+                isAccepted = False
+                breakgagal = True
+                break
+            elif (not isCase):
+                isAccepted = False
+                breakgagal = True
+                break
+            elif (isCase and isIfLevel == []) :
+                isAccepted = False
+                breakgagal = False
+                isCase = False
+                break
+            else :
+                isAccepted = True
+                breakgagal = False
+                isCase = False
+        
+        if (not isFuction and not isCase) :
+            if "CONTINUE" in lexered:
+                isAccepted = False
+                continuegagal = True
+                break
+            if "RETURN" in lexered:
+                isAccepted = False
+                returngagal = True
+                break
         
         if "CURFEW_CLOSE" in lexered:
             if level not in isIfLevel:
@@ -77,6 +112,8 @@ if isExist(inputfile):
         if "CURFEW_OPEN" in lexered:
             level+=1
             isIfLevel.append(level)
+            
+        # print(isIfLevel, isCase)
 
         cyk(lexered,parse=True)
         isAccepted = cyk.print_tree(output=False)
@@ -93,6 +130,12 @@ if isExist(inputfile):
     else:
         print('\033[93m' + f"\nSyntax Error at line {i+1}:")
         print('\033[93m' + f"   >> {line.strip()}\n")
+        if breakgagal:
+            print('\033[93m' + f"Tidak dapat menambahkan break di luar function\n")
+        if continuegagal:
+            print('\033[93m' + f"Tidak dapat menambahkan continue di luar function\n")
+        if returngagal:
+            print('\033[93m' + f"Tidak dapat menambahkan return di luar function\n")
         print(f"Readed: {lexered}")
     print('\033[0m')
     
