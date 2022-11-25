@@ -247,15 +247,15 @@ if isExist(inputfile):
                 level+=1
                 curfew.append(level)
         if eos or (not isAccepted) :
-            lexered = ''
+            testLexered = ''
             if (lexList != []) :
                 for k in range(j) :
                     if (lexList[k] != '') :
-                        lexered += lexList[k] + " "
+                        testLexered += lexList[k] + " "
                 if (lexList[j] != '') :
-                    lexered += lexList[j]
+                    testLexered += lexList[j]
                 lexList[:j+1] = []
-                cyk(lexered,parse=True)
+                cyk(testLexered,parse=True)
         
         if not isAccepted:
             break
