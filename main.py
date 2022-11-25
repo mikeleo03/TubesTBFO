@@ -97,9 +97,11 @@ if isExist(inputfile):
                     isAccepted = True
                     continue
             
-            if isString :
+            elif isString :
                 if (lexList[j] == "SINGLE_QUOTE" or lexList[j] == "DOUBLE_QUOTE" or lexList[j] == "SMART_QUOTE") :
                     isString = False
+                else :
+                    lexList[j] = "NAME"
                 isAccepted = True
                 continue
 
@@ -226,10 +228,9 @@ if isExist(inputfile):
                 curfew.append(level)
         lexered = ''
         for j in range(len(lexList)) :
-            lexered += lexList[j] + " "
+            if (lexList[j] != '') :
+                lexered += lexList[j] + " "
         # print(lexered)
-        if (isString or isBlockComment) :
-            isAccepted = False
         cyk(lexered,parse=True)
         if not isAccepted:
             break
@@ -240,7 +241,9 @@ if isExist(inputfile):
         # print(isFunc,isLoop,returngagalfunc,returngagalloop)
         """ print("terbaca",curfew)
         print("lexered",levelif,levelfunc,levelloop) """
-        
+    
+    if (isString or isBlockComment) :
+        isAccepted = False
     timefinish = time.time()
     print("\nResult:", end = " ")
     if isAccepted and curfew == []:

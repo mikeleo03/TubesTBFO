@@ -13,8 +13,8 @@ for (let i = 0; i < 9; i++) {
         test++;
     }
   }
-} 
-while (i<10) 
-{
+  break;
+}
+while (i<10) {
     i++;
 }
