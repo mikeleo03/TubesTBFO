@@ -4,20 +4,11 @@
 RULE_DICT = {}
 
 def read_grammar(grammar_file):
-    """
-    Reads in the given grammar file and splits it into separate lists for each rule.
-    :param grammar_file: the grammar file to read in.
-    :return: the list of rules.
-    """
     with open(grammar_file) as cfg:
         lines = cfg.readlines()
     return [x.replace("->", "").split() for x in lines]
 
 def add_rule(rule):
-    """
-    Adds a rule to the dictionary of lists of rules.
-    :param rule: the rule to add to the dict.
-    """
     global RULE_DICT
 
     if rule[0] not in RULE_DICT:
@@ -25,18 +16,6 @@ def add_rule(rule):
     RULE_DICT[rule[0]].append(rule[1:])
 
 def convert_grammar(grammar):
-    """
-        Converts a context-free grammar in the form of
-        S -> NP VP
-        NP -> Det ADV N
-        and so on into a chomsky normal form of that grammar. After the conversion rules have either
-        exactly one terminal symbol or exactly two non terminal symbols on its right hand side.
-        Therefore some new non terminal symbols might be created. These non terminal symbols are
-        named like the symbol they replaced with an appended index.
-    :param grammar: the CFG.
-    :return: the given grammar converted into CNF.
-    """
-
     # Remove all the productions of the type A -> X B C or A -> B a.
     global RULE_DICT
     unit_productions, result = [], []
@@ -80,7 +59,7 @@ def convert_grammar(grammar):
                 else:
                     unit_productions.append(new_rule)
                 add_rule(new_rule)
-    # Write result to external file named 'cnf.txt'
+    # Write result to external file named 'CNF.txt'
     with open('CNF.txt', 'w') as file:
         for element in result:
             if len(element)==3:

@@ -1,11 +1,14 @@
-else if(x==2) {
-    if (true) {
-      print(3);
-    } else {
-      print(2);
-    }
-  } else if (x == 32) {
-    print(4);
+function sudahlelahmonangis(x) {
+  // iseng nambahin single line comment
+  if (x > 0) {
+      if (x > 3) {
+          return "Haha";
+      }
   } else {
-    print("Momen");
+      return 0;
+  }
+
+  else {
+      return "Lelah";
+  }
 }

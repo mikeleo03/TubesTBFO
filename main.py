@@ -264,18 +264,6 @@ if isExist(inputfile):
     else:
         print('\033[93m' + f"\nSyntax Error at line {i+1}:")
         print('\033[93m' + f"   >> {line.strip()}\n")
-        """ if breakgagal:
-            print('\033[93m' + f"Tidak dapat menambahkan break di luar loop\n")
-        if continuegagal:
-            print('\033[93m' + f"Tidak dapat menambahkan continue di luar loop\n")
-        if returngagalloop and returngagalfunc:
-            print('\033[93m' + f"Tidak dapat menambahkan return di luar loop dan function\n")
-        elif returngagalloop:
-            print('\033[93m' + f"Tidak dapat menambahkan return di luar loop\n")
-        elif returngagalfunc:
-            print('\033[93m' + f"Tidak dapat menambahkan return di luar function\n")
-        if ifgagal:
-            print('\033[93m' + f"Tidak dapat menambahkan else sebelum ada if\n") """
         print(f"Readed: {lexered}")
     print('\033[0m')
     print('Execution time :',timefinish - timestart,'second(s)')
