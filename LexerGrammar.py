@@ -38,6 +38,8 @@ rules = [
         (';', 'SEMICOLON'),
         ('!', 'NOT'),
         (',', 'COMMA'),
+        (r"\\'", 'SINGLE_QUOTE_ESCAPE_CHAR'),
+        (r'\\"', 'DOUBLE_QUOTE_ESCAPE_CHAR'),
         ('null', 'NULL'),
         ('break', 'BREAK'),
         ('continue', 'CONTINUE'),

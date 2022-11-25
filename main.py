@@ -23,6 +23,7 @@ switchgagal = False
 continuegagal = False
 returngagalloop = False
 returngagalfunc = False
+startString = ''
 curfew = []
 levelif = []
 levelcase = []
@@ -98,12 +99,23 @@ if isExist(inputfile):
                     continue
             
             elif isString :
-                if (lexList[j] == "SINGLE_QUOTE" or lexList[j] == "DOUBLE_QUOTE" or lexList[j] == "SMART_QUOTE") :
+                if (lexList[j] == startString) :
                     isString = False
+                    isAccepted = True
+                    continue
+                elif (lexList[j] == 'SINGLE_LINE_COMMENT') :
+                    isString = False
+                    lexList[j:] = []
+                    break
+                elif (lexList[j] == "MULTI_LINE_COMMENT_OPEN") :
+                    isString = False
+                    lexList[j] = ""
+                    isBlockComment = True
+                    continue
                 else :
                     lexList[j] = "NAME"
-                isAccepted = True
-                continue
+                    isAccepted = True
+                    continue
 
             if lexList[j] == "MULTI_LINE_COMMENT_OPEN" :
                 lexList[j] = ""
@@ -113,6 +125,7 @@ if isExist(inputfile):
             if (lexList[j] == "SINGLE_QUOTE" or lexList[j] == "DOUBLE_QUOTE" or lexList[j] == "SMART_QUOTE") and not isString :
                 isString = True
                 isAccepted = True
+                startString = lexList[j]
                 continue
 
             if lexList[j] == "WHILE" :
