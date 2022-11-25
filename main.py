@@ -11,6 +11,7 @@ isAccepted = True
 isBlockComment = False
 isFunc = False
 isLoop = False
+isForLoop = False
 isIf = False
 isTry = False
 isCatch = False
@@ -23,6 +24,7 @@ switchgagal = False
 continuegagal = False
 returngagalloop = False
 returngagalfunc = False
+eos = False
 startString = ''
 curfew = []
 levelif = []
@@ -71,8 +73,11 @@ if isExist(inputfile):
     # Pengecekan error, parsing files
     with open(inputfile, 'r') as file:
         lines = file.readlines()
+    lexList = []
     for i, line in enumerate(lines):
         lexered = ''
+        if (eos) :
+            eos = False
         lex.input(line)
         try:
             for tok in lex.tokens():
@@ -80,7 +85,7 @@ if isExist(inputfile):
         except LexerGrammar.LexerError as err:
             print(f'LexerError at position {err.pos}')
 
-        lexList = lexered.split(" ")
+        lexList += lexered.split(" ")
         for j in range(len(lexList)) :
             if lexList[j] == "SINGLE_LINE_COMMENT" :
                 lexList[j:] = []
@@ -103,15 +108,6 @@ if isExist(inputfile):
                     isString = False
                     isAccepted = True
                     continue
-                elif (lexList[j] == 'SINGLE_LINE_COMMENT') :
-                    isString = False
-                    lexList[j:] = []
-                    break
-                elif (lexList[j] == "MULTI_LINE_COMMENT_OPEN") :
-                    isString = False
-                    lexList[j] = ""
-                    isBlockComment = True
-                    continue
                 else :
                     lexList[j] = "NAME"
                     isAccepted = True
@@ -127,6 +123,13 @@ if isExist(inputfile):
                 isAccepted = True
                 startString = lexList[j]
                 continue
+            
+            if lexList[j] == "SEMICOLON" and not isForLoop :
+                eos = True
+                break
+            
+            if lexList[j] == "PAREN_CLOSE" and isForLoop :
+                isForLoop = False
 
             if lexList[j] == "WHILE" :
                 isLoop = True
@@ -134,6 +137,7 @@ if isExist(inputfile):
                 
             if lexList[j] == "FOR" :
                 isLoop = True
+                isForLoop = True
                 levelloop.append(level+1)
                 
             if lexList[j] == "IF" :
@@ -170,6 +174,12 @@ if isExist(inputfile):
                 
             if lexList[j] == "CASE" :
                 isCase = True
+                eos = True
+                levelcase.append(level+1)
+            
+            if lexList[j] == "DEFAULT" :
+                isCase = True
+                eos = True
                 levelcase.append(level+1)
                 
             if lexList[j] == "FUNCTION" :
@@ -195,19 +205,11 @@ if isExist(inputfile):
                     continuegagal = False
             
             if lexList[j] == "RETURN" :
-                if (len(levelfunc) == 0 and len(levelloop) == 0):
+                if (not isFunc and not isLoop):
                     isAccepted = False
                     returngagalloop = True
                     returngagalfunc = True
                     break
-                elif (len(levelfunc) == 0 and len(levelloop) != 0):
-                    isAccepted = True
-                    returngagalfunc = True
-                    isLoop = False
-                elif (len(levelloop) == 0 and len(levelfunc) != 0):
-                    isAccepted = True
-                    returngagalloop = True
-                    isFunc = False
                 else :
                     isAccepted = True
                     returngagalfunc = False
@@ -218,7 +220,9 @@ if isExist(inputfile):
                 break
             
             if lexList[j] == "CURFEW_CLOSE" :
+                eos = True
                 if level not in curfew:
+                    print("Kurang kurung kurawal")
                     isAccepted = False
                     break
                 elif lexList[j] == "CURFEW_CLOSE" :
@@ -235,23 +239,31 @@ if isExist(inputfile):
                     if levelfunc == [] :
                         isFunc = False
                     if levelcase == [] :
-                        isFunc = False
+                        isCase = False
+                    if level+2 in levelif :
+                        levelif.remove(level+2)
             if lexList[j] == "CURFEW_OPEN" :
+                eos = True
                 level+=1
                 curfew.append(level)
-        lexered = ''
-        for j in range(len(lexList)) :
-            if (lexList[j] != '') :
-                lexered += lexList[j] + " "
-        # print(lexered)
-        cyk(lexered,parse=True)
+        if eos or (not isAccepted) :
+            lexered = ''
+            if (lexList != []) :
+                for k in range(j) :
+                    if (lexList[k] != '') :
+                        lexered += lexList[k] + " "
+                if (lexList[j] != '') :
+                    lexered += lexList[j]
+                lexList[:j+1] = []
+                cyk(lexered,parse=True)
+        
         if not isAccepted:
             break
-        isAccepted = cyk.print_tree(output=False)
-        if not isAccepted:
-            break
+        if (eos) :
+            isAccepted = cyk.print_tree(output=False)
+            if not isAccepted:
+                break
     
-        # print(isFunc,isLoop,returngagalfunc,returngagalloop)
         """ print("terbaca",curfew)
         print("lexered",levelif,levelfunc,levelloop) """
     

@@ -1,36 +1,33 @@
-// program to solve quadratic equation
-let root1, root2;
+// program to check if a number is prime or not
 
 // take input from the user
-let a = prompt("Enter the first number : ");
-let b = prompt("Enter the second number : ");
-let c = prompt("Enter the third number : ");
+const number = parseInt(prompt("Enter a positive number: "));
+let Prime = true;
 
-// calculate discriminant
-let discriminant = b * b - 4 * a * c;
-
-// condition for real and different roots
-if (discriminant > 0) {
-    root1 = (-b + Math.sqrt(discriminant)) / (2 * a);
-    root2 = (-b - Math.sqrt(discriminant)) / (2 * a);
-
-    // result
-    console.log('The roots of quadratic equation are root1 dan root2');
+// check if number is equal to 1
+if (number === 1) {
+    console.log("1 is neither prime nor composite number.");
 }
 
-// condition for real and equal roots
-else if (discriminant == 0) {
-    root1 = root2 = -b / (2 * a);
+// check if number is greater than 1
+else if (number > 1) {
 
-    // result
-    console.log(`The roots of quadratic equation are root1 and root2`);
+    // looping through 2 to number-1
+    for (let i = 2; i < number; i++) {
+        if (number % i == 0) {
+            isPrime = false;
+            break;
+        }
+    }
+
+    if (isPrime) {
+        console.log(`number is a prime number`);
+    } else {
+        console.log(`number is a not prime number`);
+    }
 }
 
-// if roots are not real
+// check if number is less than 1
 else {
-    let realPart = (-b / (2 * a)).toFixed(2);
-    let imagPart = (Math.sqrt(-discriminant) / (2 * a)).toFixed(2);
-
-    // result
-    console.log('The roots of quadratic equation are i');
+    console.log("The number is not a prime number.");
 }
