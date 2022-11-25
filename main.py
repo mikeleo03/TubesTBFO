@@ -47,7 +47,7 @@ $$ |  $$ $$  __$$ |\$$$  /$$  __$$ |\____$$\$$ |     $$ |     $$ $$ |  $$ |$$ |$
 inputfile = input('Insert file name (.js): ')
 if isExist(inputfile):
     lex = LexerGrammar.Lexer(LexerGrammar.rules, skip_whitespace=True)
-    cyk = CYK.Parser('cnf.txt')
+    cyk = CYK.Parser('CNF.txt')
     file = open(inputfile, "r", encoding="utf8")
     lineArr = []
     

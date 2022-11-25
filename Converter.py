@@ -81,7 +81,7 @@ def convert_grammar(grammar):
                     unit_productions.append(new_rule)
                 add_rule(new_rule)
     # Write result to external file named 'cnf.txt'
-    with open('cnf.txt', 'w') as file:
+    with open('CNF.txt', 'w') as file:
         for element in result:
             if len(element)==3:
                 file.write(f'{element[0]} -> {element[1]} {element[2]}\n')
