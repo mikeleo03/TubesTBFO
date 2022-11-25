@@ -5,7 +5,6 @@ import re
 import os.path
 
 rules = [
-        (r'in\w', 'NAME'),
         (r'for\w', 'NAME'),
         (r'while\w', 'NAME'),
         (r'null\w', 'NAME'),
