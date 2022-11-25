@@ -2,6 +2,7 @@
 # The main program and all syntax checking problems, calling exteernal functions
 
 from os.path import isfile as isExist
+import time
 import LexerGrammar
 import CYK
 import FA
@@ -53,16 +54,19 @@ if isExist(inputfile):
     # Mencetak hasil bacaan file ke 
     print("\n")
     print("====================================  PARSING  ====================================\n")
+    linecount = 0
     for line in file:
         if line != "\n" or line != "":
             lineArr.append([line, len(line) - len(line.lstrip())])
             print(line, end = "")
+            linecount += 1
     file.close()
     print("\n")
     print("====================================  VERDICT  ====================================")
     print("")
-    print(f"Compiling {inputfile}....")
+    print(f"Compiling {linecount} line(s) of code from {inputfile}....")
     print("Get a result....")
+    timestart = time.time()
     # Pengecekan error, parsing files
     with open(inputfile, 'r') as file:
         lines = file.readlines()
@@ -236,6 +240,8 @@ if isExist(inputfile):
         # print(isFunc,isLoop,returngagalfunc,returngagalloop)
         """ print("terbaca",curfew)
         print("lexered",levelif,levelfunc,levelloop) """
+        
+    timefinish = time.time()
     print("\nResult:", end = " ")
     if isAccepted and curfew == []:
         print('\033[92m' + "Accepted")
@@ -256,6 +262,8 @@ if isExist(inputfile):
             print('\033[93m' + f"Tidak dapat menambahkan else sebelum ada if\n") """
         print(f"Readed: {lexered}")
     print('\033[0m')
+    print('Execution time :',timefinish - timestart,'second(s)')
+    print('')
     
 else:
     print("There's no such file in directory!")

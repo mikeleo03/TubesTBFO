@@ -19,4 +19,6 @@ switch(new Date().getDay()) {
       break;
     case 6:
       day = "Saturday";
+    default:
+      day = "Whatever";
 }

@@ -56,7 +56,7 @@ rules = [
         ('else\W', 'ELSE'),
         ('switch', 'SWITCH'),
         ('case', 'CASE'),
-        ('default\W', 'DEFAULT'),
+        ('default', 'DEFAULT'),
         (':', 'COLON'),
         ('\.','DOT'),
         ('\d+\.\d+', 'TYPE_FLOAT'),
@@ -73,8 +73,7 @@ rules = [
         ('try', 'TRY'),
         ('catch', 'CATCH'),
         ('finally', 'FINALLY'),
-        ('[a-zA-Z_\$]+[\da-zA-Z_0-9\$]*', 'NAME'),
-        ('[\d]+[a-zA-Z_\$]+[\da-zA-Z_0-9\$]*','WRONGNAME')
+        ('[a-zA-Z_]\w*', 'NAME')
     ]
 
 class Token(object):
