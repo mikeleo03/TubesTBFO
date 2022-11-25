@@ -12,8 +12,10 @@ isFunc = False
 isLoop = False
 isIf = False
 isTry = False
+isCatch = False
 isSwitch = False
 isCase = False
+isString = False
 ifgagal = False
 breakgagal = False
 switchgagal = False
@@ -73,117 +75,160 @@ if isExist(inputfile):
         except LexerGrammar.LexerError as err:
             print(f'LexerError at position {err.pos}')
 
-        if "SINGLE_LINE_COMMENT" in lexered:
-            lexered = lexered.replace(lexered,"")
+        lexList = lexered.split(" ")
+        for j in range(len(lexList)) :
+            if lexList[j] == "SINGLE_LINE_COMMENT" :
+                lexList[j:] = []
+                break
 
-        if isBlockComment:
-            if "MULTI_LINE_COMMENT_CLOSE" in lexered:
-                lexered = lexered.replace(lexered,"")
-                isBlockComment = False
+            if isBlockComment:
+                if lexList[j] == "MULTI_LINE_COMMENT_CLOSE" :
+                    lexList[j] = ""
+                    isBlockComment = False
+                    isAccepted = True
+                    continue
+                else :
+                    lexList[j] = ""
+                    isBlockComment = True
+                    isAccepted = True
+                    continue
+            
+            if isString :
+                if (lexList[j] == "SINGLE_QUOTE" or lexList[j] == "DOUBLE_QUOTE" or lexList[j] == "SMART_QUOTE") :
+                    isString = False
                 isAccepted = True
-            else :
-                lexered = lexered.replace(lexered,"")
+                continue
+
+            if lexList[j] == "MULTI_LINE_COMMENT_OPEN" :
+                lexList[j] = ""
                 isBlockComment = True
+                continue
+            
+            if (lexList[j] == "SINGLE_QUOTE" or lexList[j] == "DOUBLE_QUOTE" or lexList[j] == "SMART_QUOTE") and not isString :
+                isString = True
                 isAccepted = True
-        
-        if "MULTI_LINE_COMMENT_OPEN" in lexered:
-            lexered = lexered.replace(lexered,"")
-            isBlockComment = True
-        
-        if "WHILE" in lexered:
-            isLoop = True
-            levelloop.append(level+1)
-            
-        if "FOR" in lexered:
-            isLoop = True
-            levelloop.append(level+1)
-            
-        if "IF" in lexered:
-            isIf = True
-            levelif.append(level+1)
-            
-        if "ELSE" in lexered:
-            levelif.append(level+1)
-            if (not isIf):
-                ifgagal = True
-                break
-            
-        if "TRY" in lexered:
-            isTry = True
-            
-        if "CATCH" in lexered:
-            if (not isTry):
-                trygagal = True
-                break
-            
-        if "CASE" in lexered:
-            isCase = True
-            levelcase.append(level+1)
-            
-        if "FUNCTION" in lexered:
-            isFunc = True
-            levelfunc.append(level+1)
-            
-        if "BREAK" in lexered:
-            if (len(levelloop) == 0 and len(levelcase) == 0):
-                isAccepted = False
-                breakgagal = True
-                break
-            elif (len(levelloop) != 0):
-                isAccepted = True
-                breakgagal = False
-                
-        if "CONTINUE" in lexered:
-            if (len(levelloop) == 0):
-                isAccepted = False
-                continuegagal = True
-                break
-            else :
-                isAccepted = True
-                continuegagal = False
-        
-        if "RETURN" in lexered:
-            if (len(levelfunc) == 0 and len(levelloop) == 0):
-                isAccepted = False
-                returngagalloop = True
-                returngagalfunc = True
-                break
-            elif (len(levelfunc) == 0 and len(levelloop) != 0):
-                isAccepted = True
-                returngagalfunc = True
-                isLoop = False
-            elif (len(levelloop) == 0 and len(levelfunc) != 0):
-                isAccepted = True
-                returngagalloop = True
-                isFunc = False
-            else :
-                isAccepted = True
-                returngagalfunc = False
-                returngagalloop = False
-                
-        if "WRONGNAME" in lexered:
-            isAccepted = False
-            break
-        
-        if "CURFEW_CLOSE" in lexered:
-            if level not in curfew:
-                isAccepted = False
-                break
-            elif "CURFEW_CLOSE" in lexered:
-                curfew.remove(level)
-                if level in levelif:
-                    levelif.remove(level)
-                if level in levelfunc:
-                    levelfunc.remove(level)
-                if level in levelloop:
-                    levelloop.remove(level)
-                level-=1
-        if "CURFEW_OPEN" in lexered:
-            level+=1
-            curfew.append(level)
+                continue
 
+            if lexList[j] == "WHILE" :
+                isLoop = True
+                levelloop.append(level+1)
+                
+            if lexList[j] == "FOR" :
+                isLoop = True
+                levelloop.append(level+1)
+                
+            if lexList[j] == "IF" :
+                isIf = True
+                levelif.append(level+1)
+                
+            if lexList[j] == "ELSE" :
+                if (not (level+1) in levelif):
+                    ifgagal = True
+                    isAccepted = False
+                    break
+                else :
+                    levelif.remove(level+1)
+                
+            if lexList[j] == "TRY" :
+                isTry = True
+                
+            if lexList[j] == "CATCH" :
+                if (not isTry):
+                    trygagal = True
+                    isAccepted = False
+                    break
+                else :
+                    isCatch = True
+            
+            if lexList[j] == "FINALLY" :
+                if (not isTry and not isCatch) :
+                    trygagal = True
+                    isAccepted = False
+                    break
+                else :
+                    isTry = False
+                    isCatch = False
+                
+            if lexList[j] == "CASE" :
+                isCase = True
+                levelcase.append(level+1)
+                
+            if lexList[j] == "FUNCTION" :
+                isFunc = True
+                levelfunc.append(level+1)
+                
+            if lexList[j] == "BREAK" :
+                if (not isLoop and not isCase):
+                    isAccepted = False
+                    breakgagal = True
+                    break
+                else :
+                    isAccepted = True
+                    breakgagal = False
+                    
+            if lexList[j] == "CONTINUE" :
+                if (not isLoop):
+                    isAccepted = False
+                    continuegagal = True
+                    break
+                else :
+                    isAccepted = True
+                    continuegagal = False
+            
+            if lexList[j] == "RETURN" :
+                if (len(levelfunc) == 0 and len(levelloop) == 0):
+                    isAccepted = False
+                    returngagalloop = True
+                    returngagalfunc = True
+                    break
+                elif (len(levelfunc) == 0 and len(levelloop) != 0):
+                    isAccepted = True
+                    returngagalfunc = True
+                    isLoop = False
+                elif (len(levelloop) == 0 and len(levelfunc) != 0):
+                    isAccepted = True
+                    returngagalloop = True
+                    isFunc = False
+                else :
+                    isAccepted = True
+                    returngagalfunc = False
+                    returngagalloop = False
+                    
+            if lexList[j] == "WRONGNAME" :
+                isAccepted = False
+                break
+            
+            if lexList[j] == "CURFEW_CLOSE" :
+                if level not in curfew:
+                    isAccepted = False
+                    break
+                elif lexList[j] == "CURFEW_CLOSE" :
+                    curfew.remove(level)
+                    if level in levelfunc:
+                        levelfunc.remove(level)
+                    if level in levelloop:
+                        levelloop.remove(level)
+                    if level in levelcase:
+                        levelcase.remove(level)
+                    level-=1
+                    if levelloop == [] :
+                        isLoop = False
+                    if levelfunc == [] :
+                        isFunc = False
+                    if levelcase == [] :
+                        isFunc = False
+            if lexList[j] == "CURFEW_OPEN" :
+                level+=1
+                curfew.append(level)
+        lexered = ''
+        for j in range(len(lexList)) :
+            lexered += lexList[j] + " "
         # print(lexered)
+        if (isString or isBlockComment) :
+            isAccepted = False
         cyk(lexered,parse=True)
+        if not isAccepted:
+            break
         isAccepted = cyk.print_tree(output=False)
         if not isAccepted:
             break

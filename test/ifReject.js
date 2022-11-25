@@ -1,4 +1,4 @@
-else {
+else if(x==2) {
     if (true) {
       print(3);
     } else {

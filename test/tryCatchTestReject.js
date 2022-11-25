@@ -3,7 +3,7 @@ try {
     if (i > 0) {
         print("test");
     }
-  } catch () {
+  } catch (e) {
     document.getElementById("demo").innerHTML = err.message;
   } 
   finally {
